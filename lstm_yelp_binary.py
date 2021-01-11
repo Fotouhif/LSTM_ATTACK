@@ -9,7 +9,7 @@ from sklearn.metrics import accuracy_score, classification_report, confusion_mat
 import seaborn as sns
 
 
-source_folder = "data/smaller_data/preprocessed_data"
+source_folder = "data/preprocessed_data"
 model_folder = "model"
 
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
