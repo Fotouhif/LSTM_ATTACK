@@ -15,7 +15,6 @@ class preprocess_data:
             # Read Raw data
             df_raw_train = pd.read_csv(self.train_data)
             df_raw_test = pd.read_csv(self.test_data)
-            print(df_raw_train[0:5])
 
             # add column headers to df
             df_raw_train.columns = ['label', 'review']
@@ -29,12 +28,17 @@ class preprocess_data:
             # Drop rows with empty text
             df_raw_train.drop( df_raw_train[df_raw_train.review.str.len() < 5].index, inplace=True)
             df_raw_test.drop( df_raw_test[df_raw_test.review.str.len() < 5].index, inplace=True)
+            #print(df_raw_train[0:5])
 
-            print(df_raw_train[0:5])
 
             # Train_valid split
-            df_train, df_valid = train_test_split(df_raw_train, train_size = 0.93, random_state = 1)
+            df_train, df_valid = train_test_split(df_raw_train, train_size = 0.8, random_state = 1)
             df_test = shuffle(df_raw_test, random_state=1)
+            #print(df_train[0:5])
+
+            df_train.to_csv('data/' + self.data_name + '/preprocessed_data/train.csv', index=False)
+            df_valid.to_csv('data/' + self.data_name + '/preprocessed_data/valid.csv', index=False)
+            df_test.to_csv('data/' + self.data_name + '/preprocessed_data/test.csv', index=False)
 
         return df_train, df_valid, df_test
 
