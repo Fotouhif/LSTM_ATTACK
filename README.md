@@ -24,10 +24,15 @@ The trained model will be saved in the /model directory.
 ### Packages
 
 argparse
+
 os
+
 torch
+
 torchtext
+
 pandas
+
 sklearn
 
 
