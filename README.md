@@ -8,4 +8,29 @@ After running the main.py file, the processed data will be saved in the /data/"d
 The trained model will be saved in the /model directory.
 
 
+### How to train the model? Run "main.py" file.
+
+* ```-data```: data in the /data directory which you would like to train
+* ```-batch_size```: batch size for training
+* ```-num_epochs```:  number of epochs
+* ```-lr```: learning rate for training
+
+### Train the model
+
+```bash
+  $ python main.py 
+```
+
+### Packages
+
+argparse
+os
+torch
+torchtext
+pandas
+sklearn
+
+
+
+
 
