@@ -27,11 +27,15 @@ argparse
 
 os
 
-torch
+torch==1.5.1
 
 torchtext
 
 pandas
+
+nltk
+
+re
 
 sklearn
 
