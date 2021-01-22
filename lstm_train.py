@@ -7,18 +7,19 @@ import os
 
 
 def train_iterators(source_folder, batch_size, device):
+
     # Fields
     label_field = Field(sequential=False, use_vocab=False, batch_first=True, dtype=torch.float)
     #print(label_field)
-    text_field = Field(tokenize=None, lower=True, include_lengths=True, batch_first=True)
+    text_field = Field(tokenize=None, lower=True, include_lengths=True, batch_first=True, fix_length = 300)
     fields = [('label', label_field), ('review', text_field)]
     #print(fields)
 
     # TabularDataset # Defines a Dataset of columns stored in CSV, TSV, or JSON format.
     train, valid, test = TabularDataset.splits(path=source_folder, train='train.csv', validation='valid.csv', test='test.csv',format='CSV', fields=fields, skip_header=True)
 
-    print(train[3].label)
-    print(train[3].review[:10])
+    #print(train[3].label)
+    #print(train[3].review[:10])
 
     # Iterators
     train_iter = BucketIterator(train, batch_size=batch_size, sort_key=lambda x: len(x.review), device=device, sort=True, sort_within_batch=True)
@@ -27,7 +28,7 @@ def train_iterators(source_folder, batch_size, device):
 
     # Vocabulary# Torchtext handles mapping words to integers, but it has to be told the full range of words it should handle.
     # In our case, we probably want to build the vocabulary on the training set only, so we run the following code:
-    text_field.build_vocab(train,vectors = 'glove.6B.200d') # Count the frequencies of tokens in all documents and build a vocab using the tokens frequencies
+    text_field.build_vocab(train,vectors = 'glove.6B.300d') # Count the frequencies of tokens in all documents and build a vocab using the tokens frequencies
     #print(text_field.vocab)
     #print(len(text_field.vocab))
     return train_iter, valid_iter, test_iter, text_field
@@ -218,10 +219,10 @@ def train(model,
         # checkpoint
         if best_valid_loss > average_valid_loss:
           best_valid_loss = average_valid_loss
-          save_checkpoint('model' + '/model.pt', model, optimizer, best_valid_loss)
-          save_metrics('model' + '/metrics.pt', train_loss_list, valid_loss_list, global_steps_list)
+          save_checkpoint('model' + f'/model_{epoch+1}.pt', model, optimizer, best_valid_loss)
+          save_metrics('model' + f'/metrics_{epoch+1}.pt', train_loss_list, valid_loss_list, global_steps_list)
 
-    save_metrics('model' + '/metrics.pt', train_loss_list, valid_loss_list, global_steps_list)
+    save_metrics('model' + f'/metrics_{epoch+1}.pt', train_loss_list, valid_loss_list, global_steps_list)
     print('Finished Training!')
 
 class train_model:

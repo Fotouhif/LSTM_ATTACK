@@ -21,6 +21,7 @@ if __name__ == '__main__':
                         help='number of epochs')
 
     args, unknown = parser.parse_known_args()
+    #print(args.num_epochs)
 
     #make preprocessed data for the first time
     if os.path.isdir('data/'+args.data_name+'/preprocessed_data') ==False:
@@ -32,11 +33,15 @@ if __name__ == '__main__':
 
         # preprocessing_data
         df_train, df_valid, df_test = preprocess_data(raw_data_path_train, raw_data_path_test, args.data_name).preprocessing()
-        print(df_test[0:5])
+        #print(df_test[0:5])
 
     source_folder = "data/"+args.data_name+"/preprocessed_data"
     train_model(source_folder, args.batch_size, device, args.num_epochs, args.lr).model_training()
 
+
+### How to run
+
+# python main.py --num_epochs 20
 
 
 
